@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Uma História Escrita por Deus</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* Paleta de Cores e Variáveis */
+        :root {
+            --rosa-antigo: #E8B4B8;
+            --creme: #FFF8F0;
+            --dourado: #D4AF37;
+            --branco-perola: #FAFAFA;
+            --texto-escuro: #4A3E3D;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--creme);
+            color: var(--texto-escuro);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 600;
+            color: var(--texto-escuro);
+            text-align: center;
+        }
+
+        /* Animação de Scroll (Fade In) */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 1s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Container de Pétalas */
+        #petals-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 99;
+            overflow: hidden;
+        }
+
+        .petal {
+            position: absolute;
+            background-color: var(--rosa-antigo);
+            border-radius: 150% 0 150% 150%;
+            opacity: 0.7;
+            animation: fade-away 10s linear infinite, sway 4s ease-in-out infinite alternate;
+            pointer-events: none;
+        }
+
+        @keyframes sway {
+            0% { transform: translateX(0px) rotate(0deg); }
+            100% { transform: translateX(50px) rotate(45deg); }
+        }
+
+        @keyframes fade-away {
+            0% { top: -10%; opacity: 0.8; }
+            90% { opacity: 0.4; }
+            100% { top: 110%; opacity: 0; }
+        }
+
+        /* Botões Estilizados */
+        .btn {
+            background-color: var(--rosa-antigo);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(232, 180, 184, 0.4);
+            transition: all 0.3s ease;
+            display: inline-block;
+            text-decoration: none;
+            margin-top: 20px;
+        }
+
+        .btn:hover {
+            background-color: #d89fa3;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(232, 180, 184, 0.6);
+        }
+
+        .btn-gold {
+            background-color: transparent;
+            color: var(--texto-escuro);
+            border: 2px solid var(--dourado);
+            box-shadow: none;
+        }
+
+        .btn-gold:hover {
+            background-color: var(--dourado);
+            color: white;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Botão de Música Flutuante */
+        .music-control {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            z-index: 100;
+            background-color: var(--branco-perola);
+            border: 2px solid var(--rosa-antigo);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            font-size: 1.3rem;
+            transition: all 0.3s ease;
+        }
+
+        .music-control:hover {
+            transform: scale(1.1);
+        }
+
+        /* Seções */
+        section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 20px;
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Tela de Abertura */
+        .hero {
+            height: 100vh;
+            max-width: 100%;
+            background: radial-gradient(circle, rgba(255,248,240,0) 0%, rgba(232,180,184,0.15) 100%);
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 600px;
+            font-style: italic;
+            opacity: 0.9;
+            padding: 0 10px;
+        }
+
+        /* Imagens */
+        .img-container {
+            width: 100%;
+            max-width: 450px;
+            margin-bottom: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            border: 8px solid var(--branco-perola);
+            background-color: var(--branco-perola);
+        }
+
+        .img-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        /* Textos e Listas */
+        .chapter-title {
+            font-size: 2.5rem;
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .chapter-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 1px;
+            background-color: var(--dourado);
+            margin: 15px auto 0 auto;
+        }
+
+        .story-text {
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            max-width: 600px;
+        }
+
+        .story-list {
+            list-style: none;
+            width: 100%;
+            max-width: 550px;
+            text-align: left;
+            margin-top: 20px;
+        }
+
+        .story-list li {
+            font-size: 1.05rem;
+            margin-bottom: 15px;
+            padding-left: 25px;
+            position: relative;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: all 0.6s ease;
+        }
+
+        .story-list li.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .story-list li::before {
+            content: '✦';
+            position: absolute;
+            left: 0;
+            color: var(--dourado);
+        }
+
+        /* Divisores */
+        .divider {
+            width: 100%;
+            max-width: 150px;
+            height: 1px;
+            background: linear-gradient(to right, transparent, var(--dourado), transparent);
+            margin: 40px auto;
+        }
+
+        /* Caixa de Mensagem Oculta */
+        .hidden-message {
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            background-color: var(--branco-perola);
+            border-radius: 15px;
+            width: 100%;
+            max-width: 500px;
+            margin-top: 15px;
+            padding: 0 20px;
+            border: 1px solid transparent;
+        }
+
+        .hidden-message.show {
+            max-height: 250px;
+            opacity: 1;
+            padding: 20px;
+            border-color: rgba(232, 180, 184, 0.3);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.02);
+        }
+
+        /* Parte Interativa */
+        .interactive-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+            width: 100%;
+            max-width: 500px;
+            margin-top: 30px;
+        }
+
+        .interactive-item {
+            width: 100%;
+        }
+
+        /* Responsividade */
+        @media (max-width: 600px) {
+            .hero h1 { font-size: 2.4rem; }
+            .hero p { font-size: 1.05rem; }
+            .chapter-title { font-size: 2rem; }
+            .story-text { font-size: 1rem; }
+            .story-list li { font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bg-music" loop>
+        <source src="Portugal - Kawe & Ananda ( Prod_1. Jay & Cita ) Original Quality.mp3" type="audio/mpeg">
+    </audio>
+
+    <button class="music-control" id="music-btn" onclick="toggleMusic()">🎵</button>
+
+    <div id="petals-container"></div>
+
+    <section class="hero">
+        <h1>Uma História Escrita por Deus</h1>
+        <p>Algumas histórias começam sem que percebamos. Outras já estavam sendo escritas muito antes de nos encontrarmos.</p>
+        <button class="btn" onclick="startStory()">Começar a História ❤️</button>
+    </section>
+
+    <div class="divider"></div>
+
+    <section id="cap1">
+        <div class="img-container reveal">
+            <img src="image_3.png" alt="Vocês crianças fazendo bolo">
+        </div>
+        <h2 class="chapter-title reveal">Como começou?</h2>
+        
+        <ul class="story-list">
+            <li>João nascendo em Jundiaí.</li>
+            <li>Camili em Santa Albertina.</li>
+            <li>Mudança para a cidade.</li>
+            <li>Primeiro dia de aula.</li>
+            <li>O plano para declarar os sentimentos.</li>
+            <li>A briga.</li>
+            <li>O início da amizade.</li>
+            <li>Os 4 anos juntos.</li>
+            <li>A mudança para Hortolândia.</li>
+        </ul>
+    </section>
+
+    <div class="divider"></div>
+
+    <section id="cap2">
+        <div class="img-container reveal">
+            <img src="image_2.png" alt="Ela sozinha">
+        </div>
+        <h2 class="chapter-title reveal">A Menina Que Ficou na Memória</h2>
+        
+        <div class="reveal">
+            <p class="story-text">Algumas pessoas passam pela nossa vida.</p>
+            <p class="story-text">Outras deixam lembranças.</p>
+            <p class="story-text">Mas existem aquelas que permanecem guardadas no coração, mesmo quando o tempo insiste em passar.</p>
+        </div>
+
+        <div class="interactive-item reveal" style="margin-top: 15px;">
+            <button class="btn btn-gold" onclick="toggleMessage('msg-pensamento')">O que eu pensava sobre você?</button>
+            <div id="msg-pensamento" class="hidden-message">
+                <p class="story-text" style="font-style: italic; color: #6b5b5a;">
+                    Eu sempre achei que você era diferente.<br>
+                    Diferente pela sua bondade.<br>
+                    Diferente pelo seu sorriso.<br>
+                    Diferente pela forma como fazia qualquer lugar parecer melhor.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section id="cap3">
+        <div class="img-container reveal">
+            <img src="image.png" alt="Vocês no jardim">
+        </div>
+        <h2 class="chapter-title reveal">O Reencontro</h2>
+        
+        <div class="reveal">
+            <p class="story-text">Não sei o que Deus tem para nós, ainda é cedo, mas quero deixar claro que nunca esqueci de você.</p>
+            <p class="story-text">Depois da primeira mensagem que mandei a você, meu coração disparou.</p>
+            <p class="story-text">Passou um filme inteiro na minha cabeça.</p>
+            <p class="story-text">Lembrei da escola. Das conversas. Dos momentos simples.</p>
+            <p class="story-text" style="font-weight: 500;">E percebi que algumas coisas o tempo não consegue apagar.</p>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section id="interativo">
+        <h2 class="chapter-title reveal">Momentos & Sentimentos</h2>
+        
+        <div class="interactive-grid">
+            <div class="interactive-item reveal">
+                <button class="btn" style="width: 100%;" onclick="toggleMessage('msg-secreta')">🌷 Mensagem Secreta</button>
+                <div id="msg-secreta" class="hidden-message">
+                    <p>Você foi meu primeiro amor. E talvez o mais sincero.</p>
+                </div>
+            </div>
+
+            <div class="interactive-item reveal">
+                <button class="btn" style="width: 100%;" onclick="toggleMessage('msg-destino')">✨ Coincidência ou Destino?</button>
+                <div id="msg-destino" class="hidden-message">
+                    <p>Eu acredito que Deus escreve histórias que só entendemos anos depois.</p>
+                </div>
+            </div>
+
+            <div class="interactive-item reveal">
+                <button class="btn" style="width: 100%;" onclick="toggleMessage('msg-sorriso')">❤️ Clique se estiver sorrindo</button>
+                <div id="msg-sorriso" class="hidden-message">
+                    <p style="font-size: 1.2rem; font-weight: 500; color: var(--dourado);">Então missão cumprida.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <section id="final" style="padding-bottom: 120px;">
+        <h2 class="chapter-title reveal">Uma Última Coisa…</h2>
+        
+        <div class="reveal">
+            <p class="story-text">Não sei como nossa história continuará.</p>
+            <p class="story-text">Não sei quais planos Deus preparou para nós.</p>
+            <p class="story-text">Mas sei que sou grato por ter encontrado você novamente.</p>
+            <p class="story-text">E independentemente do futuro,</p>
+            <p class="story-text" style="font-style: italic;">você sempre fará parte de uma das fases mais bonitas da minha vida.</p>
+        </div>
+
+        <div class="interactive-item reveal" style="margin-top: 30px; width: 100%;">
+            <button class="btn" style="font-size: 1.2rem; padding: 15px 40px;" onclick="toggleMessage('msg-coracao')">❤️ Abrir Meu Coração</button>
+            <div id="msg-coracao" class="hidden-message" style="max-width: 600px; margin: 20px auto 0 auto;">
+                <p style="font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-style: italic; color: var(--texto-escuro);">
+                    "Aquele menino da escola ainda existe. E ele continua achando você a garota mais especial que já conheceu."
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const music = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-btn');
+
+        // Função executada ao clicar em "Começar a História"
+        function startStory() {
+            // Toca a música e avança os 13 segundos de aviso do aeroporto
+            if (music.paused) {
+                music.currentTime = 13.5; 
+                music.play().catch(err => console.log("A reprodução automática foi bloqueada pelo navegador. Use o botão de música."));
+                musicBtn.textContent = '🎵';
+            }
+            
+            // Rola até o primeiro capítulo
+            document.getElementById('cap1').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Função para pausar/dar play manualmente no botão flutuante
+        function toggleMusic() {
+            if (music.paused) {
+                if (music.currentTime < 13) {
+                    music.currentTime = 13.5;
+                }
+                music.play();
+                musicBtn.textContent = '🎵';
+            } else {
+                music.pause();
+                musicBtn.textContent = '🔇';
+            }
+        }
+
+        // Abrir e fechar mensagens secretas
+        function toggleMessage(id) {
+            const msg = document.getElementById(id);
+            msg.classList.toggle('show');
+        }
+
+        // Criador de Pétalas Caindo
+        function createPetal() {
+            const container = document.getElementById('petals-container');
+            if (!container) return;
+
+            const petal = document.createElement('div');
+            petal.classList.add('petal');
+            
+            const size = Math.random() * 12 + 8; 
+            petal.style.width = `${size}px`;
+            petal.style.height = `${size}px`;
+            petal.style.left = `${Math.random() * 100}vw`;
+            
+            const duration = Math.random() * 5 + 6; 
+            petal.style.animationDuration = `${duration}s, 4s`;
+            
+            const opacity = Math.random() * 0.4 + 0.4;
+            petal.style.opacity = opacity;
+
+            container.appendChild(petal);
+
+            setTimeout(() => {
+                petal.remove();
+            }, duration * 1000);
+        }
+
+        setInterval(createPetal, 450);
+
+        // Animação de aparição (Reveal) ao rolar
+        function revealElements() {
+            const reveals = document.querySelectorAll('.reveal');
+            const windowHeight = window.innerHeight;
+
+            reveals.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                const elementVisible = 120;
+
+                if (elementTop < windowHeight - elementVisible) {
+                    element.classList.add('active');
+                }
+            });
+
+            const listItems = document.querySelectorAll('.story-list li');
+            const listContainer = document.querySelector('.story-list');
+            
+            if (listContainer) {
+                const containerTop = listContainer.getBoundingClientRect().top;
+                if (containerTop < windowHeight - 100) {
+                    listItems.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.classList.add('active');
+                        }, index * 200);
+                    });
+                }
+            }
+        }
+
+        window.addEventListener('scroll', revealElements);
+        window.addEventListener('load', revealElements);
+    </script>
+</body>
+</html>
